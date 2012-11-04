@@ -18,14 +18,14 @@ bot = Cinch::Bot.new do
 		c.port = "6667"
 	end
 
-
+	#Load yml up here so we don't have multiple instances in memory.
+	yml = YAML.load_file 'db/oracle.yml'	
 
 	#Command to reparse the oracleDB in case of new sets or updated oracle or whatever
 	on :message, /^!reparseoracle/ do |m|
 		#Initialize some stuff, the hash we store data in, the counter to tell if it's a name or not, and load up the existing yaml for later use. 
 		h = {}
 		counter = 0
-		yml = YAML.load_file 'db/oracle.yml'
 		File.open("db/oracle.txt","r") do |f|
 		       	while l = f.gets
 				if l =~ /^$/
@@ -49,6 +49,7 @@ bot = Cinch::Bot.new do
 			y.write(yml.to_yaml)
 		end
 		m.reply "Reparsed Oracle DB"
+		yml = YAML.load_file 'db/oracle.yml'
 	end
 
 
@@ -67,7 +68,6 @@ bot = Cinch::Bot.new do
 
 	#Oracle Lookup
 	on :message, /^!card ?(.*)/ do |m,q|
-		yml = YAML.load_file 'db/oracle.yml'
 		        if q.empty?
 		                puts "You need to specify a card to search for. Usage: !card <card>"
 		        else
