@@ -69,7 +69,7 @@ bot = Cinch::Bot.new do
 	#Oracle Lookup
 	on :message, /^!card ?(.*)/ do |m,q|
 		        if q.empty?
-		                puts "You need to specify a card to search for. Usage: !card <card>"
+		                m.reply "You need to specify a card to search for. Usage: !card <card>"
 		        else
 		                yml.each do |k|
                 	        if k[1]["name"].downcase =~ /^#{q.downcase}$/
@@ -89,7 +89,7 @@ bot = Cinch::Bot.new do
 	#Price Lookup using tcgplayer
 	on :message, /^!price ?(.*)/ do |m,q|
 		if q.empty?
-			puts "You need to specify a card to search for. Usage: !price <card>"
+			m.reply "You need to specify a card to search for. Usage: !price <card>"
 		else
 			
 			a = ""
